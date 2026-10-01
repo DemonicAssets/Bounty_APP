@@ -49,24 +49,6 @@ Babylon.js / Google Fonts resources in the current website.
 3. Build the solution.
 4. Press F5.
 
-Target framework: `.NET 8 for Windows`.
-
-## Desktop shortcuts
-
-- `F11` toggles borderless/full-screen mode.
-- `Ctrl+R` reloads the HSC interface.
-
-## Important
-
-The original code you showed was an MSTest test class:
-
-```csharp
-[TestClass]
-public sealed class Test1
-{
-    [TestMethod]
-    public void TestMethod1() { }
-}
 ```
 
 That is not application startup code. This project replaces it with a proper
