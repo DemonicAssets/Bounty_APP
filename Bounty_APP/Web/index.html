@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#06111b" />
+  <title>HSC // Human Systems Check Web Application</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="page hsc-single-app">
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="grid-overlay" aria-hidden="true"></div>
+
+  <header class="site-header compact">
+    <div id="header-context" class="header-left micro-copy">CIVIL PROTECTION // ACTIVE NETWORK</div>
+    <a class="brand app-route" href="#home" data-route="home" aria-label="HSC home">
+      <span class="brand-title">HSC</span>
+      <span class="brand-subtitle">Human Systems Check</span>
+    </a>
+    <img class="robot-logo" src="assets/robot-logo.png" alt="HSC robot logo" />
+    <button id="logout-button" class="logout-button header-logout" type="button" hidden>LOG OUT</button>
+  </header>
+
+  <nav class="top-nav top-nav-single" aria-label="Primary navigation">
+    <a class="nav-chip app-route" href="#inspo" data-route="inspo"><span>04</span> INSPO</a>
+    <a class="nav-chip app-route auth-only" href="#customer-service" data-route="customer-service"><span>05</span> CUSTOMER SERVICE</a>
+  </nav>
+
+  <main id="app-shell" class="single-app-shell">
+    <section class="app-view" data-view="login" aria-hidden="true">
+      <div class="login-shell">
+        <section class="login-panel panel-frame" aria-labelledby="login-title">
+          <div class="login-emblem" aria-hidden="true">
+            <div class="login-reticle"><span></span><strong>HSC</strong></div>
+          </div>
+          <div class="login-copy">
+            <p class="section-tag">HSC SECURE NETWORK // AUTHORIZATION REQUIRED</p>
+            <h1 id="login-title">SYSTEM LOGIN</h1>
+            <p class="login-intro">Authenticate to access active warrants, bounty records, subject scans, and case stories. Administrative accounts also receive access to the HSC operations terminal.</p>
+            <form id="login-form" class="login-form" autocomplete="off">
+              <label class="login-field">
+                <span>OFFICER ID / USERNAME</span>
+                <input id="login-username" name="username" type="text" autocomplete="username" required placeholder="Enter officer ID" />
+              </label>
+              <label class="login-field">
+                <span>SECURITY KEY / PASSWORD</span>
+                <input id="login-password" name="password" type="password" autocomplete="current-password" required placeholder="Enter security key" />
+              </label>
+              <button class="login-submit" type="submit">AUTHENTICATE // ENTER NETWORK</button>
+              <p id="login-message" class="login-message" role="alert"></p>
+            </form>
+
+            <div class="signup-prompt">
+              <span>DON'T HAVE AN ACCOUNT?</span>
+              <button id="open-signup" class="signup-link" type="button">CREATE ACCOUNT</button>
+            </div>
+
+            <form id="signup-form" class="login-form signup-form" autocomplete="off" hidden>
+              <div class="signup-heading">
+                <p class="section-tag">NEW USER REGISTRATION</p>
+                <button id="close-signup" class="signup-close" type="button" aria-label="Return to sign in">RETURN TO SIGN IN</button>
+              </div>
+              <label class="login-field">
+                <span>DISPLAY NAME</span>
+                <input id="signup-display-name" name="displayName" type="text" autocomplete="name" required placeholder="Enter display name" />
+              </label>
+              <label class="login-field">
+                <span>USERNAME</span>
+                <input id="signup-username" name="username" type="text" autocomplete="username" required minlength="3" placeholder="Create username" />
+              </label>
+              <label class="login-field">
+                <span>PASSWORD</span>
+                <input id="signup-password" name="password" type="password" autocomplete="new-password" required minlength="4" placeholder="Create password" />
+              </label>
+              <label class="login-field">
+                <span>CONFIRM PASSWORD</span>
+                <input id="signup-confirm-password" name="confirmPassword" type="password" autocomplete="new-password" required minlength="4" placeholder="Confirm password" />
+              </label>
+              <button class="login-submit signup-submit" type="submit">CREATE ACCOUNT // REGISTER</button>
+              <p id="signup-message" class="login-message" role="alert"></p>
+            </form>
+            <div class="login-security-note">
+              <span class="pulse-dot"></span>
+              <span>BOUNTY DATABASE ENCRYPTED // UNAUTHORIZED ACCESS DENIED</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+    <section class="app-view" data-view="home" aria-hidden="true">
+<div class="bounty-board-shell">
+  <section class="bounty-board-head panel-frame">
+    <div>
+      <p class="section-tag">HSC GLOBAL THREAT DATABASE // ACTIVE WARRANTS</p>
+      <h1>WANTED BOUNTY BOARD</h1>
+      <p>Select a subject portrait to open the last-seen locator. Select the red bounty button to open that subject's case story.</p>
+    </div>
+  </section>
+  <section class="bounty-list" id="bounty-list" aria-label="Wanted subject list"></section>
+</div>
+</section><section class="app-view" data-view="model" aria-hidden="true">
+<div class="page-route-bar">
+  <a class="route-action" href="#home">‹ RETURN TO HOME</a>
+  <a class="route-action route-action-next" href="#story" id="model-story-link">GO TO STORY ›</a>
+</div>
+<div class="locator-layout">
+  <aside class="data-panel wanted-panel">
+    <p class="section-tag danger">// LAST SEEN //</p>
+    <h1 id="model-subject-title">SUBJECT #7742-A</h1>
+    <img alt="Selected wanted subject" class="small-portrait" id="model-subject-image" src="assets/subject-portrait.jpg"/>
+    <dl class="spec-list">
+      <div><dt>Classification</dt><dd id="model-classification">Augmented Human</dd></div>
+      <div><dt>Threat Level</dt><dd class="danger" id="model-threat">Critical</dd></div>
+      <div><dt>Bounty</dt><dd class="danger" id="model-bounty">$1,000,000</dd></div>
+      <div><dt>Status</dt><dd id="model-status">At Large</dd></div>
+      <div><dt>Alias</dt><dd id="model-alias">The Half Machine</dd></div>
+    </dl>
+  </aside>
+
+  <section class="viewer-panel locator-panel">
+    <div class="viewer-heading">
+      <div>
+        <p class="section-tag">BOUNTY LOCATOR</p>
+        <h1>LAST KNOWN LOCATION</h1>
+      </div>
+      <div class="live-pill"><span></span> TRACKING DATA</div>
+    </div>
+    <div class="locator-status">
+      <span>LAST SEEN</span>
+      <strong id="model-last-seen-label">Neo Harbor / Sector 7</strong>
+      <span class="locator-coordinates" id="model-coordinates">34.05360, -118.24550</span>
+    </div>
+    <div class="map-wrap">
+      <div id="locator-map" aria-label="Map showing the selected bounty's last seen location"></div>
+      <div class="map-overlay-corner top-left">HSC // LOCATION FEED</div>
+      <div class="map-overlay-corner bottom-left">PIN = LAST VERIFIED SIGHTING</div>
+      <div class="map-crosshair" aria-hidden="true"></div>
+    </div>
+    <div class="locator-help">
+      <span>DRAG: PAN MAP</span>
+      <span>SCROLL: ZOOM</span>
+      <span>PIN: LAST VERIFIED SIGHTING</span>
+    </div>
+  </section>
+
+  <aside class="data-panel diagnostics-panel">
+    <p class="section-tag">LOCATION DATA</p>
+    <dl class="spec-list">
+      <div><dt>Subject ID</dt><dd id="model-id">7742-A</dd></div>
+      <div><dt>Last Seen</dt><dd id="model-location">Neo Harbor / Sector 7</dd></div>
+      <div><dt>Latitude</dt><dd id="model-latitude">34.05360</dd></div>
+      <div><dt>Longitude</dt><dd id="model-longitude">-118.24550</dd></div>
+      <div><dt>Tracking</dt><dd class="success">LAST VERIFIED</dd></div>
+    </dl>
+    <div class="diagnostic-box">
+      <div class="diag-title">LOCATOR STATUS</div>
+      <div class="meter"><span style="width: 92%"></span></div>
+      <p id="locatorText">Last verified sighting loaded.</p>
+    </div>
+    <div class="model-note">
+      <strong>EDIT THE LAST-SEEN PIN</strong>
+      <p>Change each bounty's <code>lastSeen.lat</code> and <code>lastSeen.lng</code> values in <code>app.js</code> to move its locator pin.</p>
+    </div>
+  </aside>
+</div>
+</section><section class="app-view" data-view="story" aria-hidden="true">
+<div class="page-route-bar">
+  <a class="route-action" href="#home">‹ RETURN TO HOME</a>
+  <a class="route-action route-action-next admin-only" href="#terminal">OPEN CASE TERMINAL ›</a>
+</div>
+<div class="story-layout">
+<section class="story-hero panel-frame">
+<div class="story-photo-wrap">
+<img alt="Selected wanted subject" id="story-subject-image" src="assets/subject-portrait.jpg"/>
+<span class="wanted-stamp">WANTED</span>
+</div>
+<article class="case-copy">
+<p class="section-tag" id="story-case-tag">HSC // CASE FILE #7742-A</p>
+<h1>SUBJECT STORY</h1>
+<p class="lead" id="story-lead">A human mind. A machine advantage.</p>
+<div id="story-body"></div>
+<blockquote id="story-quote">“He doesn't just hack systems. He thinks inside them.”</blockquote>
+</article>
+<aside class="bounty-card">
+<span>WANTED BOUNTY</span>
+<strong id="story-bounty">$1,000,000</strong>
+<small>SUBJECT AT LARGE</small>
+<dl class="spec-list">
+<div><dt>Subject ID</dt><dd id="story-id">#7742-A</dd></div>
+<div><dt>Classification</dt><dd id="story-classification">Augmented Human</dd></div>
+<div><dt>Threat</dt><dd class="danger" id="story-threat">Critical</dd></div>
+<div><dt>Last Seen</dt><dd id="story-location">Neo Harbor / Sector 7</dd></div>
+</dl>
+</aside>
+</section>
+<section class="timeline panel-frame">
+<div class="section-heading">
+<p class="section-tag">TIMELINE // KEY EVENTS</p>
+</div>
+<div class="timeline-grid">
+<article><span>2019</span><h3>HSC ENGINEER</h3><p>Joined advanced systems research and human-machine interface development.</p></article>
+<article><span>2021</span><h3>ILLEGAL AUGMENTATION</h3><p>Underwent an unauthorized cybernetic integration procedure and vanished from official records.</p></article>
+<article><span>2022</span><h3>NETWORK BREACHES</h3><p>Linked to repeated infrastructure and data-center intrusions across multiple districts.</p></article>
+<article><span>2023</span><h3>HSC ATTACK</h3><p>Security records tie the subject to a coordinated breach of an HSC surveillance hub.</p></article>
+<article><span>2024–PRESENT</span><h3>AT LARGE</h3><p>Current location unknown. False identities and synthetic biometrics are suspected.</p></article>
+</div>
+</section>
+<section class="records-grid">
+<article class="record-card panel-frame">
+<p class="section-tag">CHARGES // ACTIVE WARRANTS</p>
+<ul>
+<li>Cyberterrorism</li>
+<li>Unauthorized Human Augmentation</li>
+<li>HSC System Infiltration</li>
+<li>Theft of Classified Data</li>
+<li>Sabotage of Automated Infrastructure</li>
+</ul>
+</article>
+<article class="record-card panel-frame">
+<p class="section-tag">INCIDENT NOTES // FIELD REPORTS</p>
+<div class="incident"><time>2024.02.17</time><span>Civilian power-grid disruption // Neo Harbor.</span></div>
+<div class="incident"><time>2023.11.14</time><span>HSC surveillance breach // multiple systems compromised.</span></div>
+<div class="incident"><time>2023.06.03</time><span>Armed resistance during attempted apprehension.</span></div>
+<div class="incident"><time>2022.12.11</time><span>Financial network intrusion // transfers under investigation.</span></div>
+</article>
+<article class="record-card panel-frame">
+<p class="section-tag">EVIDENCE // RECOVERED</p>
+<div class="evidence-grid">
+<div><span>01</span><strong>Surveillance Frame</strong><small>Visual ID match</small></div>
+<div><span>02</span><strong>Neural Interface</strong><small>Prototype hardware</small></div>
+<div><span>03</span><strong>Encrypted Logs</strong><small>Partial recovery</small></div>
+</div>
+</article>
+</section>
+</div>
+</section><section class="app-view" data-view="inspo" aria-hidden="true">
+<div class="inspo-layout">
+<section class="inspo-hero panel-frame">
+<div class="inspo-hero-copy">
+<p class="section-tag">INSPIRATION // CREATIVE DNA</p>
+<h1>CYBERPUNK WORLD.<br/><span>TERMINATOR EDGE.</span></h1>
+<p class="inspo-lead">
+          Human Systems Check combines the atmosphere of <strong>Cyberpunk 2077</strong> with the human-versus-machine tension associated with <strong>The Terminator</strong>, then reshapes those ideas into its own futuristic police-file universe.
+        </p>
+</div>
+<div aria-hidden="true" class="inspo-scan-card">
+<div class="scan-core">
+<span class="scan-ring ring-one"></span>
+<span class="scan-ring ring-two"></span>
+<span class="scan-cross horizontal"></span>
+<span class="scan-cross vertical"></span>
+<strong>HSC</strong>
+<small>INSPIRATION MATRIX</small>
+</div>
+</div>
+</section>
+<section class="inspo-grid">
+<article class="inspo-card panel-frame cyberpunk-card">
+<div class="inspo-number">01</div>
+<p class="section-tag">WORLD INSPIRATION</p>
+<h2>CYBERPUNK 2077</h2>
+<p>
+          The world of HSC is inspired by Cyberpunk's vision of a dense future city where advanced technology is built into everyday life. Neon interfaces, corporate power, surveillance networks, cybernetic upgrades, digital crime, and the gap between powerful institutions and ordinary people all influence the site's setting.
+        </p>
+<p>
+          HSC takes those ideas and turns them into a law-enforcement database: every screen feels like part of a city-wide security network tracking augmented people, dangerous technology, and crimes that can happen both on the street and inside connected systems.
+        </p>
+<div aria-label="Cyberpunk inspiration themes" class="inspo-tags">
+<span>MEGACITY</span><span>AUGMENTATION</span><span>SURVEILLANCE</span><span>NEON TECH</span><span>CYBER CRIME</span>
+</div>
+</article>
+<article class="inspo-card panel-frame terminator-card">
+<div class="inspo-number">02</div>
+<p class="section-tag danger">CHARACTER INSPIRATION</p>
+<h2>THE TERMINATOR</h2>
+<p>
+          Subject #7742-A connects to The Terminator through the visual idea of a person caught between human and machine. His cybernetic side makes him look engineered, relentless, and dangerous, while the human side keeps his choices personal instead of purely programmed.
+        </p>
+<p>
+          The biggest difference is his role in this story: #7742-A is a <strong>vigilante</strong>. He uses illegal augmentations and direct access to connected systems to go after people and organizations he believes are corrupt. To some citizens he may look like a protector; to HSC, his unauthorized methods, hacking, sabotage, and refusal to answer to the law make him a wanted threat.
+        </p>
+<div aria-label="Terminator inspiration themes" class="inspo-tags red-tags">
+<span>HUMAN + MACHINE</span><span>RELENTLESS</span><span>VIGILANTE</span><span>CYBERNETIC</span><span>WANTED</span>
+</div>
+</article>
+<article class="inspo-card panel-frame creators-card">
+<div class="inspo-number">03</div>
+<p class="section-tag">PROJECT CREDITS</p>
+<h2>CREATED BY</h2>
+<p>
+          Human Systems Check was created by the team listed below. The names and roles in this section are loaded from <strong>creators.js</strong>, so you can change the credits without having to rebuild the page.
+        </p>
+<div aria-label="Project creators" class="creator-list" id="creator-list"></div>
+<p class="creator-edit-note">EDIT NAMES: Open <strong>creators.js</strong> and change the text inside the creator entries.</p>
+</article>
+</section>
+<section class="connection-panel panel-frame">
+<div>
+<p class="section-tag">HOW IT CONNECTS // HSC</p>
+<h2>ONE WORLD, ONE WANTED SUBJECT</h2>
+</div>
+<div class="connection-flow">
+<div class="flow-node">
+<span>WORLD</span>
+<strong>Cyberpunk-inspired city</strong>
+<small>Technology, surveillance, augmentation and corporate control shape everyday life.</small>
+</div>
+<div class="flow-arrow">›</div>
+<div class="flow-node">
+<span>CHARACTER</span>
+<strong>Terminator-inspired design</strong>
+<small>A human-machine figure with a powerful cybernetic presence and a relentless mission.</small>
+</div>
+<div class="flow-arrow">›</div>
+<div class="flow-node alert-node">
+<span>HSC STORY</span>
+<strong>Vigilante at large</strong>
+<small>He fights corruption outside the law, putting him in direct conflict with the system tracking him.</small>
+</div>
+</div>
+</section>
+<section class="inspo-disclaimer panel-frame">
+<span class="status-dot"></span>
+<p><strong>CREATIVE NOTE:</strong> HSC is an original fictional project. Cyberpunk 2077 and The Terminator are referenced here as creative inspirations for atmosphere and character direction, not as part of the same fictional universe.</p>
+</section>
+</div>
+
+</section><section class="app-view" data-view="customer-service" aria-hidden="true">
+  <div class="customer-service-shell">
+    <section class="customer-service-card panel-frame">
+      <div class="customer-service-copy">
+        <p class="section-tag">HSC SUPPORT NETWORK // CUSTOMER SERVICE</p>
+        <h1>CUSTOMER SERVICE</h1>
+        <p class="customer-service-intro">Need help with an HSC record, case access, or account issue? Contact the support desk below or request an appointment.</p>
+
+        <div class="contact-grid">
+          <article class="contact-item">
+            <span>CONTACT NAME</span>
+            <strong id="support-contact-name">HSC Customer Service</strong>
+          </article>
+          <article class="contact-item">
+            <span>EMAIL</span>
+            <a id="support-contact-email" href="mailto:support@example.com">support@example.com</a>
+          </article>
+          <article class="contact-item">
+            <span>PHONE</span>
+            <a id="support-contact-phone" href="tel:+15555550100">(555) 555-0100</a>
+          </article>
+          <article class="contact-item">
+            <span>HOURS</span>
+            <strong id="support-contact-hours">Mon-Fri // 9:00 AM-5:00 PM</strong>
+          </article>
+        </div>
+
+        <button id="open-appointment" class="appointment-button" type="button">MAKE APPOINTMENT</button>
+        <p class="appointment-note">Submitting an appointment request sends an email alert to the customer service email listed above.</p>
+      </div>
+
+      <form id="appointment-form" class="appointment-form" hidden>
+        <div class="appointment-form-head">
+          <div>
+            <p class="section-tag">APPOINTMENT REQUEST // SECURE FORM</p>
+            <h2>REQUEST APPOINTMENT</h2>
+          </div>
+          <button id="close-appointment" class="appointment-close" type="button" aria-label="Close appointment form">×</button>
+        </div>
+        <div class="appointment-fields">
+          <label><span>YOUR NAME</span><input name="name" type="text" required maxlength="80" placeholder="Enter your name" /></label>
+          <label><span>YOUR EMAIL</span><input name="email" type="email" required maxlength="120" placeholder="you@example.com" /></label>
+          <label><span>PREFERRED DATE</span><input name="date" type="date" required /></label>
+          <label><span>PREFERRED TIME</span><input name="time" type="time" required /></label>
+          <label class="appointment-wide"><span>REASON / NOTES</span><textarea name="notes" rows="4" maxlength="600" placeholder="What would you like help with?"></textarea></label>
+        </div>
+        <div class="appointment-actions">
+          <button class="appointment-button" type="submit">SEND APPOINTMENT REQUEST</button>
+          <span id="appointment-message" class="appointment-message" role="status"></span>
+        </div>
+      </form>
+    </section>
+  </div>
+</section><section class="app-view" data-view="terminal" aria-hidden="true">
+<div class="page-route-bar">
+  <a class="route-action" href="#home">‹ RETURN TO HOME</a>
+  <span class="route-context">HSC CASE TERMINAL</span>
+</div>
+<div class="application-layout">
+<section class="terminal-hero panel-frame">
+<div>
+<p class="section-tag">HSC OPERATIONS // LIVE INTERFACE</p>
+<h1>CASE TERMINAL</h1>
+<p>Search active records, review threat data, and submit new field reports. Reports are saved on this device so the application stays interactive without a server.</p>
+</div>
+<div aria-label="Network status" class="terminal-network">
+<span class="status-dot"></span>
+<div><small>NETWORK STATUS</small><strong>ONLINE</strong></div>
+<div><small>ACCESS LEVEL</small><strong>FIELD AGENT</strong></div>
+</div>
+</section>
+<section aria-label="Case statistics" class="terminal-stats">
+<article class="terminal-stat panel-frame"><span>ACTIVE CASES</span><strong id="stat-active">0</strong><small>Current database</small></article>
+<article class="terminal-stat panel-frame"><span>HIGH THREAT</span><strong id="stat-high">0</strong><small>Priority response</small></article>
+<article class="terminal-stat panel-frame"><span>OPEN REPORTS</span><strong id="stat-reports">0</strong><small>Saved locally</small></article>
+<article class="terminal-stat panel-frame"><span>PRIMARY SUBJECT</span><strong class="subject-stat">7742-A</strong><small>At large</small></article>
+</section>
+<section class="terminal-grid">
+<section class="case-browser panel-frame">
+<div class="terminal-section-head">
+<div>
+<p class="section-tag">DATABASE // SUBJECT INDEX</p>
+<h2>CASE RECORDS</h2>
+</div>
+<span class="result-count" id="result-count">0 RECORDS</span>
+</div>
+<div class="case-tools">
+<label class="terminal-field terminal-search">
+<span>SEARCH DATABASE</span>
+<input autocomplete="off" id="case-search" placeholder="Name, ID, alias, location..." type="search"/>
+</label>
+<label class="terminal-field">
+<span>THREAT</span>
+<select id="threat-filter">
+<option value="all">All levels</option>
+<option value="critical">Critical</option>
+<option value="high">High</option>
+<option value="medium">Medium</option>
+<option value="low">Low</option>
+</select>
+</label>
+<label class="terminal-field">
+<span>STATUS</span>
+<select id="status-filter">
+<option value="all">All statuses</option>
+<option value="At Large">At Large</option>
+<option value="Wanted">Wanted</option>
+<option value="Under Watch">Under Watch</option>
+<option value="Contained">Contained</option>
+</select>
+</label>
+</div>
+<div aria-live="polite" class="case-list" id="case-list"></div>
+</section>
+<aside aria-live="polite" class="case-detail panel-frame">
+<div class="terminal-section-head">
+<div>
+<p class="section-tag">SELECTED RECORD</p>
+<h2 id="detail-id">CASE #7742-A</h2>
+</div>
+<span class="case-status danger-status" id="detail-status">AT LARGE</span>
+</div>
+<div class="detail-portrait-wrap">
+<img alt="Selected case subject" id="detail-image" src="assets/subject-portrait.jpg"/>
+<span class="threat-badge threat-critical" id="detail-threat-badge">CRITICAL</span>
+</div>
+<h3 id="detail-name">Subject 7742-A</h3>
+<p class="detail-alias" id="detail-alias">Alias: The Half Machine</p>
+<p class="detail-summary" id="detail-summary"></p>
+<dl class="spec-list terminal-spec-list">
+<div><dt>Classification</dt><dd id="detail-classification">Augmented Human</dd></div>
+<div><dt>Last Seen</dt><dd id="detail-location">Neo Harbor</dd></div>
+<div><dt>Bounty</dt><dd id="detail-bounty">$1,000,000</dd></div>
+<div><dt>Case Status</dt><dd id="detail-case-status">At Large</dd></div>
+</dl>
+</aside>
+</section>
+<section class="reports-grid">
+<section class="report-form-card panel-frame">
+<div class="terminal-section-head">
+<div>
+<p class="section-tag">FIELD OPERATIONS // INPUT</p>
+<h2>SUBMIT INCIDENT REPORT</h2>
+</div>
+<span class="encrypted-label">LOCAL // ENCRYPTED</span>
+</div>
+<form class="incident-form" id="incident-form">
+<div class="form-row">
+<label class="terminal-field"><span>AGENT / OFFICER</span><input maxlength="50" name="officer" placeholder="Agent name" required=""/></label>
+<label class="terminal-field"><span>SUBJECT / CASE ID</span><input maxlength="30" name="caseId" placeholder="7742-A" required=""/></label>
+</div>
+<div class="form-row">
+<label class="terminal-field"><span>INCIDENT TYPE</span>
+<select name="type" required="">
+<option value="Sighted Subject">Sighted Subject</option>
+<option value="Cyber Intrusion">Cyber Intrusion</option>
+<option value="Property Damage">Property Damage</option>
+<option value="Armed Encounter">Armed Encounter</option>
+<option value="Evidence Recovered">Evidence Recovered</option>
+<option value="Other">Other</option>
+</select>
+</label>
+<label class="terminal-field"><span>PRIORITY</span>
+<select name="priority" required="">
+<option value="High">High</option>
+<option value="Medium">Medium</option>
+<option value="Low">Low</option>
+</select>
+</label>
+</div>
+<label class="terminal-field"><span>LOCATION</span><input maxlength="80" name="location" placeholder="District / sector / street" required=""/></label>
+<label class="terminal-field"><span>REPORT DETAILS</span><textarea maxlength="600" name="details" placeholder="Describe the incident, evidence, and actions taken..." required="" rows="5"></textarea></label>
+<div class="form-actions">
+<button class="terminal-button primary" type="submit">TRANSMIT REPORT</button>
+<button class="terminal-button" type="reset">CLEAR FORM</button>
+<span class="form-message" id="form-message" role="status"></span>
+</div>
+</form>
+</section>
+<section class="report-log-card panel-frame">
+<div class="terminal-section-head">
+<div>
+<p class="section-tag">FIELD OPERATIONS // LOG</p>
+<h2>RECENT REPORTS</h2>
+</div>
+<button class="text-button" id="clear-reports" type="button">CLEAR SAVED</button>
+</div>
+<div aria-live="polite" class="report-list" id="report-list"></div>
+</section>
+</section>
+</div>
+</section>
+  </main>
+
+  <footer class="site-footer">
+    <span>HSC CIVIL PROTECTION DIVISION</span>
+    <span id="footer-motto" class="footer-motto">REAL PEOPLE · REAL THREATS · REAL SOLUTIONS</span>
+    <span id="clock">--:--:--</span>
+  </footer>
+
+  <script src="creators.js"></script>
+  <script src="auth-config.js"></script>
+  <script src="customer-service-config.js"></script>
+  <script src="app.js"></script>
+  <script src="application.js"></script>
+  <script src="model.js"></script>
+</body>
+</html>
