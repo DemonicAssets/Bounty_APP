@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "An0pXWKU1Ag=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\B217\\Downloads\\Bounty_APP_Locator_Futuristic\\Bounty_APP_Desktop\\Bounty_APP\\Bounty_APP.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\B217\\.nuget\\packages\\microsoft.web.webview2\\1.0.4258.31\\microsoft.web.webview2.1.0.4258.31.nupkg.sha512"
+  ],
+  "logs": []
+}
